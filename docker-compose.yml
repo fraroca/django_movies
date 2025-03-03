@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  # Servicio para la aplicación Django
+  web:
+    build: .
+    command: >
+      sh -c "python manage.py migrate --noinput && python manage.py runserver 0.0.0.0:8000"
+    container_name: drf-crud-web
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      - DEBUG=True
+      - DB_NAME=peliculas
+      - DB_USER=postgres
+      - DB_PASSWORD=admin
+      - DB_HOST=db  # El nombre del contenedor de la base de datos
+      - DB_PORT=5432
+      - DJANGO_SETTINGS_MODULE=api_crud.settings
+
+  # Servicio para la base de datos PostgreSQL
+  db:
+    image: postgres:13
+    container_name: drf-crud-db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  # Volumen para persistir datos
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: peliculas
+    ports:
+      - "5433:5432"  # Exponer el puerto 5432 para conexiones externas
+   
+
+# Definir volúmenes para persistir los datos de PostgreSQL
+volumes:
+  postgres_data:

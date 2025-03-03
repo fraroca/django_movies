@@ -99,11 +99,11 @@ WSGI_APPLICATION = 'api_crud.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('DB_NAME', 'peliculas'),
-        'USER': os.environ.get('DB_USER', 'postgres'),
-        'PASSWORD': os.environ.get('DB_PASSWORD', 'admin'),
-        'HOST': os.environ.get('DB_HOST', 'localhost'),  # 'db' es el nombre del servicio en docker-compose.yml
-        'PORT': os.environ.get('DB_PORT', '5432'),
+        'NAME': 'peliculas',
+        'USER': 'postgres',
+        'PASSWORD': 'admin',
+        'HOST': 'db',  # 'db' es el nombre del servicio en docker-compose.yml
+        'PORT': '5433',
     }
 }
 
