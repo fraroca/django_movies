@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Director, Movie
+from .models import Director, Movie, DirectorMovie
 from django.contrib.auth.models import User
 
 
@@ -21,4 +21,9 @@ class UserSerializer(serializers.ModelSerializer):  # create class to serializer
 class DirectorSerializer(serializers.ModelSerializer):  # create class to serializer model
     class Meta:
         model = Director
+        fields = '__all__'
+
+class DirectorMovieSerializer(serializers.ModelSerializer):  # create class to serializer model
+    class Meta:
+        model = DirectorMovie
         fields = '__all__'
