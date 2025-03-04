@@ -8,3 +8,4 @@ psycopg2==2.9.10
 debugpy==1.8.0  # O la última versión disponible
 django-redis==4.12.1
 redis==5.2.1
+django-silk==5.2.0

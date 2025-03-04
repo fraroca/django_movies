@@ -13,6 +13,13 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 import os
 from datetime import timedelta
 
+try:
+    import silk  # noqa: F401
+    SILK_INSTALLED = True
+except ImportError:
+    SILK_INSTALLED = False
+
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -52,6 +59,7 @@ INSTALLED_APPS = [
     'authentication',
     'movies',
 ]
+
 
 SITE_ID = 1
 
@@ -162,3 +170,7 @@ CACHES = {
         }
     }
 }
+
+if SILK_INSTALLED:
+    INSTALLED_APPS += ["silk"]
+    MIDDLEWARE += ["silk.middleware.SilkyMiddleware"]

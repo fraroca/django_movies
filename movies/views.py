@@ -57,6 +57,17 @@ class DirectorViewSet(viewsets.ModelViewSet):
         return Director.objects.all()
 
     def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
+    '''def list(self, request, *args, **kwargs):
         cache_key = "movies_list"
 
         # Intentar obtener la respuesta desde la caché
@@ -76,7 +87,7 @@ class DirectorViewSet(viewsets.ModelViewSet):
             cache.set(cache_key, serialized_data, timeout=10000)
 
             # Devolver los datos serializados
-            return Response(serialized_data, status=status.HTTP_200_OK)
+            return Response(serialized_data, status=status.HTTP_200_OK)'''
 
 
 
