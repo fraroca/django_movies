@@ -13,6 +13,7 @@ services:
       - "8000:8000"
     depends_on:
       - db
+      - redis  # Dependencia de Redis
     environment:
       - DEBUG=True
       - DB_NAME=peliculas
@@ -21,6 +22,8 @@ services:
       - DB_HOST=db  # El nombre del contenedor de la base de datos
       - DB_PORT=5432
       - DJANGO_SETTINGS_MODULE=api_crud.settings
+      - REDIS_HOST=redis  # Configuración para Redis
+      - REDIS_PORT=6379
 
   # Servicio para la base de datos PostgreSQL
   db:
@@ -34,8 +37,16 @@ services:
       POSTGRES_DB: peliculas
     ports:
       - "5433:5432"  # Exponer el puerto 5432 para conexiones externas
-   
+  # Servicio para Redis
+  redis:
+    image: redis:6  # Usa la versión 6 de Redis
+    container_name: drf-crud-redis
+    ports:
+      - "6379:6379"  # Exponer el puerto 6379 para conexiones externas
+    volumes:
+      - redis_data:/data  # Volumen para persistir datos de Redi
 
 # Definir volúmenes para persistir los datos de PostgreSQL
 volumes:
   postgres_data:
+  redis_data:

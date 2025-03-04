@@ -152,3 +152,13 @@ SIMPLE_JWT = {
     'ROTATE_REFRESH_TOKENS': False,  # No rotar el refresh token (opcional)
     'SIGNING_KEY': SECRET_KEY,  # La clave para firmar el token, generalmente tu `SECRET_KEY`
 }
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://redis:6379/0",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
